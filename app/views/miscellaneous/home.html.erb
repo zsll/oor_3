@@ -1,0 +1,50 @@
+<div class="well">
+	Code Section with title and darkback ground. 
+	<% code_content = "gem 'highlight', :require => 'simplabs/highlight'"%>
+	<%= render 'layouts/code_section', :title => "Gemfile", :content => code_content %>
+
+	<% code_content = "$ bundle install
+$ rails s"%>
+	<%= render 'layouts/code_section', :title => "terminal", :content => code_content %>
+
+	Highlighted ruby.
+	<% code = "class Constant
+  def self.continents
+    ['Europe', 'Asia', 'Australia', 'North America', 'South America', 'Africa', 'Antarctica']
+  end
+
+  def self.gender
+    {:female => 'gal', :male => 'guy', :else => '*@#\$'}
+  end
+end" %>
+	<% cache Digest::SHA1.hexdigest(code) do %>
+		<% code_content = highlight_code(:rb, code).html_safe %>
+		<%= render 'layouts/code_section', :title => "/config/initializers/constants.rb", :content => code_content %>
+	<% end %>
+
+	Highlighted erb.
+	<% code = "You are from \<%= select_tag 'continents', options_for_select(Constant.continents) %\>.
+Your are \<%= select 'gender', 'person', Constant.gender %\>." %>
+	<% cache Digest::SHA1.hexdigest(code) do %>
+		<% code_content = highlight_code(:erb, code).html_safe %>
+		<%= render 'layouts/code_section', :title => "/app/views/miscellaneous/select.html.erb", :content => code_content %>
+	<% end %>
+	
+	Highlighted css.
+	<% code = "
+/* Code section header and blackboard, to mimic RailsCast highlight style */
+.oor-code-block {
+	margin: 12px 0;
+	clear: both;
+}
+
+/* Code section body, overwritten highlight.css to mimic RailsCast highlight style */
+.oor-code-ray .nc, .oor-code-ray .no, .oor-code-ray .o {
+	color: #fff;
+}
+" %>
+	<% cache Digest::SHA1.hexdigest(code) do %>
+		<% code_content = highlight_code(:css, code).html_safe %>
+		<%= render 'layouts/code_section', :title => "/app/assets/stylesheets/your.css.erb", :content => code_content %>
+	<% end %>
+</div>
