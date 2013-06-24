@@ -1,11 +1,11 @@
 <div class="well">
 	Code Section with title and darkback ground. 
-	<% code_content = "gem 'highlight', :require => 'simplabs/highlight'"%>
-	<%= render 'layouts/code_section', :title => "Gemfile", :content => code_content %>
+	<% code = "gem 'highlight', :require => 'simplabs/highlight'"%>
+	<%= render 'layouts/code_section', :title => "Gemfile", :code => code %>
 
-	<% code_content = "$ bundle install
+	<% code = "$ bundle install
 $ rails s"%>
-	<%= render 'layouts/code_section', :title => "terminal", :content => code_content %>
+	<%= render 'layouts/code_section', :title => "terminal", :code => code %>
 
 	Highlighted ruby.
 	<% code = "class Constant
@@ -17,18 +17,11 @@ $ rails s"%>
     {:female => 'gal', :male => 'guy', :else => '*@#\$'}
   end
 end" %>
-	<% cache Digest::SHA1.hexdigest(code) do %>
-		<% code_content = highlight_code(:rb, code).html_safe %>
-		<%= render 'layouts/code_section', :title => "/config/initializers/constants.rb", :content => code_content %>
-	<% end %>
-
+	<%= render 'layouts/code_section', :title => "/config/initializers/constants.rb", :code => code, :lang => :rb %>
 	Highlighted erb.
 	<% code = "You are from \<%= select_tag 'continents', options_for_select(Constant.continents) %\>.
 Your are \<%= select 'gender', 'person', Constant.gender %\>." %>
-	<% cache Digest::SHA1.hexdigest(code) do %>
-		<% code_content = highlight_code(:erb, code).html_safe %>
-		<%= render 'layouts/code_section', :title => "/app/views/miscellaneous/select.html.erb", :content => code_content %>
-	<% end %>
+	<%= render 'layouts/code_section', :title => "/app/views/miscellaneous/select.html.erb", :code => code, :lang => :erb %>
 	
 	Highlighted css.
 	<% code = "
@@ -43,8 +36,5 @@ Your are \<%= select 'gender', 'person', Constant.gender %\>." %>
 	color: #fff;
 }
 " %>
-	<% cache Digest::SHA1.hexdigest(code) do %>
-		<% code_content = highlight_code(:css, code).html_safe %>
-		<%= render 'layouts/code_section', :title => "/app/assets/stylesheets/your.css.erb", :content => code_content %>
-	<% end %>
+	<%= render 'layouts/code_section', :title => "/app/assets/stylesheets/your.css.erb", :code => code, :lang => :css %>
 </div>
